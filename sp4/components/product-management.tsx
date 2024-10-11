@@ -1,11 +1,11 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { 
-  Bell, 
-  Moon, 
-  Sun, 
-  Package, 
+import {
+  Bell,
+  Moon,
+  Sun,
+  Package,
   Users,
   Trash2,
   Edit,
@@ -83,15 +83,19 @@ export function ProductManagementComponent() {
   const [showAddProductDialog, setShowAddProductDialog] = useState(false)
   const [showEditProductDialog, setShowEditProductDialog] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
-  const [newProduct, setNewProduct] = useState({ 
-    name: '', brand: '', model: '', color: '', memory: '', camera: '', 
+  const [newProduct, setNewProduct] = useState({
+    name: '', brand: '', model: '', color: '', memory: '', camera: '',
     price: '', stock: '', description: '', status: '', category: '', image: '/placeholder.svg'
   })
   const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false)
   const [productToDelete, setProductToDelete] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const fileInputRef = useRef(null)
-  const toast = useToast()
+  // const {toast} = useToast()
+  // const { toast: toastFunction, ...rest } = useToast();
+  const { toast } = useToast(); 
+  // const toastObject = useToast();
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -118,7 +122,7 @@ export function ProductManagementComponent() {
     return 0
   })
 
-  const filteredProducts = sortedProducts.filter(product => 
+  const filteredProducts = sortedProducts.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.model.toLowerCase().includes(searchTerm.toLowerCase())
@@ -150,8 +154,8 @@ export function ProductManagementComponent() {
 
     setProducts([...products, { id: products.length + 1, ...newProduct }])
     setShowAddProductDialog(false)
-    setNewProduct({ 
-      name: '', brand: '', model: '', color: '', memory: '', camera: '', 
+    setNewProduct({
+      name: '', brand: '', model: '', color: '', memory: '', camera: '',
       price: '', stock: '', description: '', status: '', category: '', image: '/placeholder.svg'
     })
     toast.success({
@@ -173,15 +177,18 @@ export function ProductManagementComponent() {
   }
 
   const handleDeleteProduct = () => {
-    setProducts(products.filter(product => product.id !== productToDelete.id))
-    setShowDeleteConfirmDialog(false)
-    setProductToDelete(null)
-    toast.success({
+    const toastObject = useToast(); // Get the whole toast object
+
+    setProducts(products.filter((product) => product.id !== productToDelete.id));
+    setShowDeleteConfirmDialog(false);
+    setProductToDelete(null);
+    toastObject.toast({ // Call toast() from the object
       title: "删除成功",
       description: "商品已从列表中移除。",
-      duration: 2000,
-    })
-  }
+      type: "success", // Make sure you have a "type" property for styling
+    });
+
+  };
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0]
@@ -305,7 +312,7 @@ export function ProductManagementComponent() {
                               <Input
                                 id="name"
                                 value={newProduct.name}
-                                onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -317,7 +324,7 @@ export function ProductManagementComponent() {
                               <Input
                                 id="brand"
                                 value={newProduct.brand}
-                                onChange={(e) => setNewProduct({...newProduct, brand: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, brand: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -329,7 +336,7 @@ export function ProductManagementComponent() {
                               <Input
                                 id="model"
                                 value={newProduct.model}
-                                onChange={(e) => setNewProduct({...newProduct, model: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, model: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -341,7 +348,7 @@ export function ProductManagementComponent() {
                               <Input
                                 id="color"
                                 value={newProduct.color}
-                                onChange={(e) => setNewProduct({...newProduct, color: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, color: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -349,7 +356,7 @@ export function ProductManagementComponent() {
                           </div>
                         </TabsContent>
                         <TabsContent value="details">
-                
+
                           <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
                               <Label htmlFor="memory" className="text-right">
@@ -358,7 +365,7 @@ export function ProductManagementComponent() {
                               <Input
                                 id="memory"
                                 value={newProduct.memory}
-                                onChange={(e) => setNewProduct({...newProduct, memory: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, memory: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -370,7 +377,7 @@ export function ProductManagementComponent() {
                               <Input
                                 id="camera"
                                 value={newProduct.camera}
-                                onChange={(e) => setNewProduct({...newProduct, camera: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, camera: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -383,7 +390,7 @@ export function ProductManagementComponent() {
                                 id="price"
                                 type="number"
                                 value={newProduct.price}
-                                onChange={(e) => setNewProduct({...newProduct, price: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -396,7 +403,7 @@ export function ProductManagementComponent() {
                                 id="stock"
                                 type="number"
                                 value={newProduct.stock}
-                                onChange={(e) => setNewProduct({...newProduct, stock: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
                                 className="col-span-3"
                                 required
                               />
@@ -408,7 +415,7 @@ export function ProductManagementComponent() {
                               <Textarea
                                 id="description"
                                 value={newProduct.description}
-                                onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
                                 className="col-span-3"
                               />
                             </div>
@@ -416,7 +423,7 @@ export function ProductManagementComponent() {
                               <Label htmlFor="status" className="text-right">
                                 商品状态 <span className="text-red-500">*</span>
                               </Label>
-                              <Select onValueChange={(value) => setNewProduct({...newProduct, status: value})} required>
+                              <Select onValueChange={(value) => setNewProduct({ ...newProduct, status: value })} required>
                                 <SelectTrigger className="col-span-3">
                                   <SelectValue placeholder="选择商品状态" />
                                 </SelectTrigger>
@@ -433,7 +440,7 @@ export function ProductManagementComponent() {
                               <Label htmlFor="category" className="text-right">
                                 商品分类 <span className="text-red-500">*</span>
                               </Label>
-                              <Select onValueChange={(value) => setNewProduct({...newProduct, category: value})} required>
+                              <Select onValueChange={(value) => setNewProduct({ ...newProduct, category: value })} required>
                                 <SelectTrigger className="col-span-3">
                                   <SelectValue placeholder="选择商品分类" />
                                 </SelectTrigger>
@@ -610,7 +617,7 @@ export function ProductManagementComponent() {
                   <Input
                     id="edit-name"
                     value={editingProduct?.name || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, name: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -621,7 +628,7 @@ export function ProductManagementComponent() {
                   <Input
                     id="edit-brand"
                     value={editingProduct?.brand || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, brand: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, brand: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -632,7 +639,7 @@ export function ProductManagementComponent() {
                   <Input
                     id="edit-model"
                     value={editingProduct?.model || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, model: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, model: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -643,7 +650,7 @@ export function ProductManagementComponent() {
                   <Input
                     id="edit-color"
                     value={editingProduct?.color || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, color: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, color: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -658,7 +665,7 @@ export function ProductManagementComponent() {
                   <Input
                     id="edit-memory"
                     value={editingProduct?.memory || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, memory: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, memory: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -669,7 +676,7 @@ export function ProductManagementComponent() {
                   <Input
                     id="edit-camera"
                     value={editingProduct?.camera || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, camera: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, camera: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -681,7 +688,7 @@ export function ProductManagementComponent() {
                     id="edit-price"
                     type="number"
                     value={editingProduct?.price || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, price: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, price: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -693,7 +700,7 @@ export function ProductManagementComponent() {
                     id="edit-stock"
                     type="number"
                     value={editingProduct?.stock || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, stock: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, stock: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -704,7 +711,7 @@ export function ProductManagementComponent() {
                   <Textarea
                     id="edit-description"
                     value={editingProduct?.description || ''}
-                    onChange={(e) => setEditingProduct({...editingProduct, description: e.target.value})}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -712,9 +719,9 @@ export function ProductManagementComponent() {
                   <Label htmlFor="edit-status" className="text-right">
                     商品状态
                   </Label>
-                  <Select 
-                    value={editingProduct?.status} 
-                    onValueChange={(value) => setEditingProduct({...editingProduct, status: value})}
+                  <Select
+                    value={editingProduct?.status}
+                    onValueChange={(value) => setEditingProduct({ ...editingProduct, status: value })}
                   >
                     <SelectTrigger className="col-span-3">
                       <SelectValue placeholder="选择商品状态" />
