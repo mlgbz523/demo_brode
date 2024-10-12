@@ -53,11 +53,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
+// import { useToast } from "@/components/ui/use-toast"
 // import { toast } from "@/components/ui/toast"
 import Image from "next/image"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-// import { toast } from '@radix-ui/react-toast'
 
 const menuItems = [
   { icon: Users, name: "用户管理" },
@@ -94,7 +93,6 @@ export function ProductManagementComponent() {
   const [searchTerm, setSearchTerm] = useState('')
   const [toast, setToast] = useState(null) // Added toast state
   const fileInputRef = useRef(null)
-  // const { toast } = useToast()
 
   useEffect(() => {
     const interval = setInterval(() => {
