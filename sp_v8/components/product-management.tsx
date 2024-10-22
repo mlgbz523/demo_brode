@@ -199,7 +199,7 @@ export function ProductManagementComponent() {
       <div
         className={cn(
           "h-full shadow-lg transition-all duration-300 ease-in-out",
-          isDarkMode ? "bg-gray-800" : "bg-gradient-to-b from-blue-600 to-indigo-800",
+          isDarkMode ? "bg-gra-800" : "bg-gradient-to-b from-blue-600 to-indigo-800",
           isExpanded ? "w-64" : "w-16"
         )}
         onMouseEnter={() => setIsExpanded(true)}
